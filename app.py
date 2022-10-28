@@ -16,3 +16,6 @@ def index(path):
             "error": str(e)
         }
     
+    
+if __name__ == "__main__":
+    app.run()
