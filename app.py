@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, request
+from flask import Flask, request, Response
 
 app = Flask(__name__)
 
@@ -9,7 +9,10 @@ app = Flask(__name__)
 def index(path):
     vk_api_url = "https://api.vk.com/method/" + path
     try:
-        return requests.get(vk_api_url, params=request.args).content
+        vk_response = requests.get(vk_api_url, params=request.args,headers={ "Accept": "application/json" })
+        response = Response(vk_response.content)
+        response.headers = vk_response.headers
+        return response
     except Exception as e:
         return {
             "error": str(e)
